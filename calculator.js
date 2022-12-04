@@ -17,7 +17,8 @@ const formulaDisplay = document.querySelector('.formula');
 const resultDisplay = document.querySelector('.result');
 
 const operands = Array.from(document.querySelectorAll('.operand'));
-operands.forEach(operand => operand.addEventListener('click', displayOperand));
+operands.forEach(operand => operand.addEventListener('click', () =>
+    displayOperand(operand.textContent)));
 
 const operators = Array.from(document.querySelectorAll('.operator'));
 operators.forEach(operator => operator.addEventListener('click', displayOperator));
@@ -27,6 +28,15 @@ equalSign.addEventListener('click', operate);
 
 const clear = document.querySelector('.functional.clear');
 clear.addEventListener('click',clearFormulaDisplay);
+
+window.addEventListener('keydown', (e) => {
+    const keys = Array.from(document.querySelectorAll('button'));
+    const keyPressed = keys.find(key => key.textContent === e.key);
+
+    if (keyPressed.classList.contains('operand')) {
+        displayOperand(keyPressed.textContent);
+    };
+});
 
 function add(a,b) {
     return +(a+b).toFixed(PRECISION);
@@ -52,11 +62,11 @@ function operate() {
     resultDisplay.textContent = result;
 }
 
-function displayOperand() {
-    formulaDisplay.textContent += this.textContent;
+function displayOperand(textContent) {
+    formulaDisplay.textContent += textContent;
 
-    if (formula.operator === '') formula.leftOperand+=this.textContent;
-    else formula.rightOperand+=this.textContent;
+    if (formula.operator === '') formula.leftOperand+=textContent;
+    else formula.rightOperand+=textContent;
 }
 
 function displayOperator() {
