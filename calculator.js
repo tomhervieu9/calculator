@@ -1,4 +1,13 @@
 const PRECISION = 10;
+const keys = Array.from(document.querySelectorAll('button'));
+const formulaDisplay = document.querySelector('.formula');
+const resultDisplay = document.querySelector('.result');
+const OPERATOR_MAPPING = {
+    '+':'add',
+    '−':'subtract',
+    '×':'multiply',
+    '÷':'divide'
+}
 let formula = {
     leftOperand:'',
     operator:'',
@@ -6,36 +15,33 @@ let formula = {
     // evaluated:false;
 }
 
-const OPERATOR_MAPPING = {
-    '+':'add',
-    '−':'subtract',
-    '×':'multiply',
-    '÷':'divide'
-}
-
-const formulaDisplay = document.querySelector('.formula');
-const resultDisplay = document.querySelector('.result');
 
 const operands = Array.from(document.querySelectorAll('.operand'));
-operands.forEach(operand => operand.addEventListener('click', () =>
-    displayOperand(operand.textContent)));
+operands.forEach(operand => operand.addEventListener('click', () => {
+    displayOperand(operand.textContent)
+}));
 
 const operators = Array.from(document.querySelectorAll('.operator'));
-operators.forEach(operator => operator.addEventListener('click', displayOperator));
+operators.forEach(operator => operator.addEventListener('click', () => {
+    displayOperator(operator.textContent);
+}));
 
-const equalSign = document.querySelector('.functional.equal');
-equalSign.addEventListener('click', operate);
+const evaluate = document.querySelector('.operate');
+evaluate.addEventListener('click', operate);
 
-const clear = document.querySelector('.functional.clear');
+const clear = document.querySelector('.clear');
 clear.addEventListener('click',clearFormulaDisplay);
 
 window.addEventListener('keydown', (e) => {
-    const keys = Array.from(document.querySelectorAll('button'));
-    const keyPressed = keys.find(key => key.textContent === e.key);
+    const keyPressed = keys.find(key => key.getAttribute('data-keys').includes(e.key));
 
     if (keyPressed.classList.contains('operand')) {
         displayOperand(keyPressed.textContent);
-    };
+    } else if (keyPressed.classList.contains('operator')) {
+        displayOperator(keyPressed.textContent);
+    } else if (keyPressed.classList.contains('operate')) {
+        operate();
+    }
 });
 
 function add(a,b) {
@@ -50,7 +56,6 @@ function multiply(a,b) {
 function divide(a,b) {
     return +(a/b).toFixed(PRECISION);
 }
-
 function operate() {
     if(formula.leftOperand===''
         || formula.operator===''
@@ -61,30 +66,27 @@ function operate() {
         (+formula.leftOperand,+formula.rightOperand);
     resultDisplay.textContent = result;
 }
-
 function displayOperand(textContent) {
     formulaDisplay.textContent += textContent;
 
     if (formula.operator === '') formula.leftOperand+=textContent;
     else formula.rightOperand+=textContent;
 }
-
-function displayOperator() {
+function displayOperator(textContent) {
     if (resultDisplay.textContent !== '' && (formula.leftOperand==='' || formula.rightOperand!=='')) {
         clearFormulaDisplay();
         formulaDisplay.textContent+=resultDisplay.textContent;
         formula.leftOperand = resultDisplay.textContent;
-        formula.operator = this.textContent;
-        formulaDisplay.textContent+=this.textContent;
+        formula.operator = textContent;
+        formulaDisplay.textContent+=textContent;
         resultDisplay.textContent = '';
     }
     else if (formula.operator===''&&formula.leftOperand!=='') {
-        formulaDisplay.textContent += this.textContent;
-        formula.operator = this.textContent;
+        formulaDisplay.textContent += textContent;
+        formula.operator = textContent;
     }
     return;
 }
-
 function clearFormulaDisplay() {
     formulaDisplay.textContent='';
     formula.leftOperand='';
