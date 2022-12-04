@@ -33,7 +33,10 @@ const clear = document.querySelector('.clear');
 clear.addEventListener('click',clearFormulaDisplay);
 
 window.addEventListener('keydown', (e) => {
-    const keyPressed = keys.find(key => key.getAttribute('data-keys').includes(e.key));
+    const keyPressed = keys.find(key => {
+        const validInputs = key.getAttribute('data-keys').split(',');
+        return validInputs.includes(e.key);
+    });
 
     if (keyPressed.classList.contains('operand')) {
         displayOperand(keyPressed.textContent);
