@@ -44,6 +44,8 @@ window.addEventListener('keydown', (e) => {
         displayOperator(keyPressed.textContent);
     } else if (keyPressed.classList.contains('operate')) {
         operate();
+    } else if (keyPressed.classList.contains('clear')) {
+        clearFormulaDisplay();
     }
 });
 
