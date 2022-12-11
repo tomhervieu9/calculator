@@ -1,12 +1,18 @@
+// global data
 const PRECISION = 10;
 const keys = Array.from(document.querySelectorAll('button'));
 const formulaDisplay = document.querySelector('.formula');
 const resultDisplay = document.querySelector('.result');
+const operands = Array.from(document.querySelectorAll('.operand'));
+const operators = Array.from(document.querySelectorAll('.operator'));
+const evaluate = document.querySelector('.operate');
+const clear = document.querySelector('.clear');
 const OPERATOR_MAPPING = {
     '+':'add',
     '−':'subtract',
     '×':'multiply',
-    '÷':'divide'
+    '÷':'divide',
+    '^':'exponent',
 }
 let formula = {
     leftOperand:'',
@@ -15,23 +21,17 @@ let formula = {
     // evaluated:false;
 }
 
-
-const operands = Array.from(document.querySelectorAll('.operand'));
+// adds sensing for button clicks
 operands.forEach(operand => operand.addEventListener('click', () => {
     displayOperand(operand.textContent)
 }));
-
-const operators = Array.from(document.querySelectorAll('.operator'));
 operators.forEach(operator => operator.addEventListener('click', () => {
     displayOperator(operator.textContent);
 }));
-
-const evaluate = document.querySelector('.operate');
 evaluate.addEventListener('click', operate);
-
-const clear = document.querySelector('.clear');
 clear.addEventListener('click',clearFormulaDisplay);
 
+// adds sensing for typed keys
 window.addEventListener('keydown', (e) => {
     const keyPressed = keys.find(key => {
         const validInputs = key.getAttribute('data-keys').split(',');
@@ -49,6 +49,17 @@ window.addEventListener('keydown', (e) => {
     }
 });
 
+// calculation functions
+function operate() {
+    if(formula.leftOperand===''
+        || formula.operator===''
+        || formula.rightOperand==='') {
+            return;
+        }
+    const result = window[OPERATOR_MAPPING[formula.operator]]
+        (+formula.leftOperand,+formula.rightOperand);
+    resultDisplay.textContent = result;
+}
 function add(a,b) {
     return +(a+b).toFixed(PRECISION);
 }
@@ -61,16 +72,11 @@ function multiply(a,b) {
 function divide(a,b) {
     return +(a/b).toFixed(PRECISION);
 }
-function operate() {
-    if(formula.leftOperand===''
-        || formula.operator===''
-        || formula.rightOperand==='') {
-            return;
-        }
-    const result = window[OPERATOR_MAPPING[formula.operator]]
-        (+formula.leftOperand,+formula.rightOperand);
-    resultDisplay.textContent = result;
+function exponent(a,b) {
+    return +(a**b).toFixed(PRECISION);
 }
+
+// display functions
 function displayOperand(textContent) {
     formulaDisplay.textContent += textContent;
 
