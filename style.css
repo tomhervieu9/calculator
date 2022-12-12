@@ -5,7 +5,6 @@ h1 {
 
 .content {
     display: flex;
-
 }
 
 .legend {
@@ -21,31 +20,28 @@ h1 {
     width: 100px;
 }
 
-
 .calculator {
     width: 500px;
     height: auto;
     margin: auto;
     margin-top: 100px;
-    background-color:rgb(59, 59, 59);
     border-radius: 20px;
+    border: 4px solid black;
     padding: 35px;
-    border-style: solid;
-    border-color: black;
+    background-color:rgb(46, 46, 46);
 }
 
 .screen {
-    background-color: rgb(217, 217, 217);
     min-height: 100px;
-    border-radius: 20px;
-    border-style: solid;
-    border-color: black;
     margin-bottom: 100px;
+    border-radius: 20px;
+    border: 2px solid black;
     padding-left: 10px;
     padding-right: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background-color: rgb(217, 217, 217);
 }
 
 .formula {
@@ -68,8 +64,7 @@ button {
     aspect-ratio: 1/1;
     margin: auto;
     border-radius: 10px;
-    border-style: solid;
-    border-color: black;
+    border: 2px solid black;
     font-size: 40px;
 }
 
@@ -79,4 +74,8 @@ button {
 
 .operator {
     background-color: rgb(176, 218, 255);
+}
+
+.functional {
+    background-color: rgb(150, 253, 142);
 }
