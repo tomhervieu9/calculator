@@ -5,7 +5,7 @@ const formulaDisplay = document.querySelector('.formula');
 const resultDisplay = document.querySelector('.result');
 const operands = Array.from(document.querySelectorAll('.operand'));
 const operators = Array.from(document.querySelectorAll('.operator'));
-const evaluate = document.querySelector('.operate');
+const evaluator = document.querySelector('.evaluator');
 const clear = document.querySelector('.clear');
 const OPERATOR_MAPPING = {
     '+':'add',
@@ -18,39 +18,40 @@ let formula = {
     leftOperand:'',
     operator:'',
     rightOperand:'',
-    // evaluated:false;
 }
 
-// adds sensing for button clicks
+// adds sensing for clicks
 operands.forEach(operand => operand.addEventListener('click', () => {
     displayOperand(operand.textContent)
 }));
 operators.forEach(operator => operator.addEventListener('click', () => {
     displayOperator(operator.textContent);
 }));
-evaluate.addEventListener('click', operate);
+evaluator.addEventListener('click', evaluate);
 clear.addEventListener('click',clearFormulaDisplay);
 
-// adds sensing for typed keys
+// adds sensing for keys
 window.addEventListener('keydown', (e) => {
     const keyPressed = keys.find(key => {
         const validInputs = key.getAttribute('data-keys').split(',');
         return validInputs.includes(e.key);
     });
 
-    if (keyPressed.classList.contains('operand')) {
+    if (!keyPressed) {
+        return;
+    } else if (keyPressed.classList.contains('operand')) {
         displayOperand(keyPressed.textContent);
     } else if (keyPressed.classList.contains('operator')) {
         displayOperator(keyPressed.textContent);
-    } else if (keyPressed.classList.contains('operate')) {
-        operate();
+    } else if (keyPressed.classList.contains('evaluator')) {
+        evaluate();
     } else if (keyPressed.classList.contains('clear')) {
         clearFormulaDisplay();
     }
 });
 
 // calculation functions
-function operate() {
+function evaluate() {
     if(formula.leftOperand===''
         || formula.operator===''
         || formula.rightOperand==='') {
