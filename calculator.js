@@ -32,6 +32,8 @@ clear.addEventListener('click',clearFormulaDisplay);
 
 // adds sensing for keys
 window.addEventListener('keydown', (e) => {
+    e.preventDefault();
+
     const keyPressed = keys.find(key => {
         const validInputs = key.getAttribute('data-keys').split(',');
         return validInputs.includes(e.key);

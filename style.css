@@ -7,19 +7,6 @@ h1 {
     display: flex;
 }
 
-.legend {
-    width: 300px;
-    height: auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    justify-items: center;
-    align-items: center;
-}
-
-.icon {
-    width: 100px;
-}
-
 .calculator {
     width: 500px;
     height: auto;
