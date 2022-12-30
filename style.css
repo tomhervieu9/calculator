@@ -8,24 +8,13 @@ h1 {
 }
 
 .content {
-    display: grid;
-    padding-left: 20%;
-    padding-right: 20%;
-    grid-template-columns: 1fr 4fr;
-}
-
-.info {
-    margin:0 auto;
-}
-
-.info.title {
-    height: 10%;
-    font-size: 36px;
+    display: flex;
+    justify-content: center;
 }
 
 .calculator {
-    width: 100%;
-    height: 100%;
+    height: 850px;
+    width: fit-content;
     border-radius: 20px;
     border: 4px solid black;
     padding: 35px;

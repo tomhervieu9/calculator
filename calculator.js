@@ -32,6 +32,7 @@ clear.addEventListener('click',clearFormulaDisplay);
 
 // adds sensing for keys
 window.addEventListener('keydown', (e) => {
+    //prevents hitting 'enter' from triggering an unexpected event when a button was previously selected
     e.preventDefault();
 
     const keyPressed = keys.find(key => {
